@@ -12,6 +12,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.integrate import solve_ivp
+![alt text](image-5.png)
+![alt text](image-6.png)
 
 class ChargedParticle:
     def __init__(self, q=1.6e-19, m=9.11e-31, v0=np.array([1e6, 0, 0])):
@@ -83,7 +85,8 @@ print(f"Larmor radius: {r_L:.2e} m")
 particle.plot_trajectory_3d(pos, "Particle Trajectory in Uniform B Field (3D)")
 particle.plot_trajectory_2d(pos[:,:2], "Particle Trajectory in Uniform B Field (XY Plane)")
 ```
-
+![alt text](image-7.png)
+![alt text](image-8.png)
 ## Case 2: Combined Electric and Magnetic Fields (E ∥ B)
 
 ```python
@@ -96,7 +99,8 @@ pos, vel, t = particle.simulate_trajectory(E, B, t_span=(0, 5e-8))
 particle.plot_trajectory_3d(pos, "Particle Trajectory in Parallel E and B Fields (3D)")
 particle.plot_trajectory_2d(pos[:,:2], "Particle Trajectory in Parallel E and B Fields (XY Plane)")
 ```
-
+![alt text](image-9.png)
+![alt text](image-10.png)
 ## Case 3: Crossed Electric and Magnetic Fields (E ⊥ B)
 
 ```python
@@ -113,7 +117,8 @@ print(f"E×B drift velocity: {v_drift} m/s")
 particle.plot_trajectory_3d(pos, "Particle Trajectory in Crossed E and B Fields (3D)")
 particle.plot_trajectory_2d(pos[:,:2], "Particle Trajectory in Crossed E and B Fields (XY Plane)")
 ```
-
+![alt text](image-11.png)
+![alt text](image-12.png)
 ## Discussion of Results
 
 ### 1. Uniform Magnetic Field
