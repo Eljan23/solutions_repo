@@ -171,47 +171,134 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-1">Problem 1</h1>
-<p>⚙️ Task: Equivalent Resistance Using Graph Theory
-🧠 Key Ideas
-We model a resistor network as a weighted undirected graph, where:</p>
-<p>Nodes = junctions</p>
-<p>Edges = resistors, with edge weights = resistance in ohms</p>
-<p>We iteratively:</p>
-<p>Merge series resistors (1 path between two nodes)</p>
-<p>Merge parallel resistors (multiple edges between the same node pair)</p>
-<p>✅ Python Implementation
-<img alt="alt text" src="../image.png"/>
-<img alt="alt text" src="../image-1.png"/>
-🧪 Example Tests
-1. Simple Series Circuit
-<img alt="alt text" src="../image-2.png"/>
-Series (2Ω + 3Ω): 5 Ω
-<img alt="alt text" src="../image-3.png"/>
-Parallel (2Ω || 3Ω): 3 Ω
-2. Simple Parallel Circuit
-<img alt="alt text" src="../image-4.png"/>
-Parallel (4Ω || 6Ω): 2.4000000000000004 Ω
-📈 Efficiency &amp; Improvements
-Time Complexity:
-Each simplification step takes 
-𝑂
-(
-𝐸
-)
-O(E)</p>
-<p>Loop converges quickly (since nodes/edges reduce each round)</p>
-<p>Improvements:
-Add support for multi-source inputs (more general network)</p>
-<p>Optimize by caching known series/parallel combinations</p>
-<p>Add cycle detection for Wheatstone bridge cases (requires Y-Δ transform)</p>
-<p>✅ Deliverables Summary
-Requirement Delivered
-Pseudocode / Algorithm  ✔️
-Python Code (Full Implementation)   ✔️
-Handles Arbitrary Topologies    ✔️
-Tested on 3 Examples    ✔️
-Performance Discussion  ✔️</p>
+<p><strong>Problem 1: Equivalent Resistance Using Graph Theory</strong></p>
+<hr/>
+<h3 id="mathematical-and-algorithmic-foundation">🔹 Mathematical and Algorithmic Foundation</h3>
+<p>Electrical circuits can be modeled as <strong>weighted undirected graphs</strong>, where:</p>
+<ul>
+<li><strong>Nodes</strong> = circuit junctions</li>
+<li><strong>Edges</strong> = resistors (edge weights = resistance values)</li>
+</ul>
+<p><strong>Goal</strong>: Find the <strong>equivalent resistance</strong> between two specified nodes (e.g., input and output terminals) by systematically reducing the graph.</p>
+<hr/>
+<h2 id="option-2-advanced-task-full-implementation">✅ <strong>Option 2: Advanced Task – Full Implementation</strong></h2>
+<hr/>
+<h3 id="step-by-step-strategy">🧠 Step-by-Step Strategy</h3>
+<h4 id="1-graph-representation">1. <strong>Graph Representation</strong></h4>
+<ul>
+<li>Model the circuit as an undirected weighted graph using <code>networkx</code>.</li>
+<li>Each resistor is an edge with weight equal to its resistance.</li>
+</ul>
+<h4 id="2-reduction-rules">2. <strong>Reduction Rules</strong></h4>
+<ul>
+<li><strong>Series:</strong> If two nodes are connected by a single path (degree 2), collapse the series:</li>
+</ul>
+<p>$$
+  R_{\text{eq}} = R_1 + R_2
+  $$
+* <strong>Parallel:</strong> For nodes connected by multiple paths (same start and end), reduce using:</p>
+<p>$$
+  \frac{1}{R_{\text{eq}}} = \sum \frac{1}{R_i}
+  $$</p>
+<h4 id="3-traversal-and-simplification">3. <strong>Traversal and Simplification</strong></h4>
+<ul>
+<li>Use DFS or BFS to identify reduction opportunities.</li>
+<li>Repeatedly apply simplifications until only one equivalent edge remains between the start and end nodes.</li>
+</ul>
+<hr/>
+<h3 id="example-circuit-diagrams-and-expected-behavior">🧪 Example Circuit Diagrams and Expected Behavior</h3>
+<table>
+<thead>
+<tr>
+<th>Example</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Series</td>
+<td>Resistors 2Ω and 3Ω between A and B → Result: 5Ω</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Parallel</td>
+<td>2Ω and 3Ω in parallel between A and B → Result: <span class="arithmatex">\(\frac{1}{\frac{1}{2} + \frac{1}{3}} = 1.2Ω\)</span></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Mixed</td>
+<td>2Ω &amp; 2Ω in parallel, in series with 4Ω → Result: 5Ω</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h3 id="python-implementation">🐍 Python Implementation</h3>
+<pre><code class="language-python">import networkx as nx
+
+def combine_parallel_edges(G):
+    for u, v in list(G.edges()):
+        edges = list(G.get_edge_data(u, v).values())
+        if len(edges) &gt; 1:
+            total_inv = sum(1 / edge['resistance'] for edge in edges)
+            R_eq = 1 / total_inv
+            G.remove_edges_from([(u, v)] * len(edges))
+            G.add_edge(u, v, resistance=R_eq)
+
+def simplify_series_nodes(G):
+    changed = True
+    while changed:
+        changed = False
+        for node in list(G.nodes()):
+            if G.degree[node] == 2 and node not in ('A', 'B'):  # Skip terminals
+                neighbors = list(G.neighbors(node))
+                r1 = G[node][neighbors[0]]['resistance']
+                r2 = G[node][neighbors[1]]['resistance']
+                R_eq = r1 + r2
+                G.add_edge(neighbors[0], neighbors[1], resistance=R_eq)
+                G.remove_node(node)
+                changed = True
+                break
+
+def calculate_equivalent_resistance(G, source, target):
+    combine_parallel_edges(G)
+    simplify_series_nodes(G)
+    return G[source][target]['resistance'] if G.has_edge(source, target) else None
+
+# Example: Mixed circuit (Parallel + Series)
+G = nx.MultiGraph()
+G.add_edge('A', 'C', resistance=2)
+G.add_edge('A', 'C', resistance=2)
+G.add_edge('C', 'B', resistance=4)
+
+R_eq = calculate_equivalent_resistance(G, 'A', 'B')
+print(f"Equivalent Resistance: {R_eq} Ω")
+</code></pre>
+<p><img alt="alt text" src="../image-5.png"/>
+<img alt="alt text" src="../image-6.png"/></p>
+<hr/>
+<h3 id="analysis-of-algorithm-efficiency">📈 Analysis of Algorithm Efficiency</h3>
+<ul>
+<li>
+<p>For sparse graphs (typical in circuits), performance is efficient:</p>
+</li>
+<li>
+<p><strong>Series detection</strong>: <span class="arithmatex">\(O(N)\)</span></p>
+</li>
+<li><strong>Parallel merging</strong>: <span class="arithmatex">\(O(E)\)</span></li>
+<li>
+<p>Can be improved using:</p>
+</li>
+<li>
+<p>Union-find data structures</p>
+</li>
+<li>Kirchhoff’s Laws and matrix reduction (for advanced cases)</li>
+</ul>
+<hr/>
+<h3 id="conclusion">🧩 Conclusion</h3>
+<p>This approach effectively models and reduces circuits using graph-based methods, automating what would otherwise be a manual and error-prone process for large circuits.</p>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
