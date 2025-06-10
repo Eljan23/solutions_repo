@@ -1,143 +1,195 @@
-# Problem 3
-🌌 Problem 3: Trajectories of a Freely Released Payload Near Earth
-✨ Motivation
-When a payload is released from a spacecraft or rocket near Earth, its trajectory can vary dramatically depending on the initial velocity and direction. The possible outcomes include:
 
-Elliptical orbits (payload remains bound),
+---
 
-Parabolic trajectory (borderline escape),
+## Task 1: Theoretical Foundation
 
-Hyperbolic trajectory (escape path),
+### Mathematical Formulation:
 
-Suborbital trajectories (reentry to Earth).
+Newton’s law of gravitation for a payload near Earth:
 
-Understanding these trajectories is essential for:
+$$
+\vec{F} = -\frac{GMm}{r^2} \hat{r}
+$$
 
-Satellite deployment,
+Using Newton’s 2nd law:
 
-Space mission planning,
+$$
+\vec{a} = -\frac{GM}{r^2} \hat{r}
+$$
 
-Reentry capsule design.
+This leads to elliptical, parabolic, or hyperbolic orbits depending on total energy $E$:
 
-⚖️ Theoretical Foundation
-Newton's Law of Universal Gravitation:
-𝐹
-⃗
-=
-−
-𝐺
-𝑀
-𝑚
-𝑟
-2
-𝑟
-^
-F
- =− 
-r 
-2
- 
-GMm
-​
-  
-r
-^
- 
-Acceleration:
-𝑎
-⃗
-=
-−
-𝐺
-𝑀
-𝑟
-3
-𝑟
-⃗
-a
- =− 
-r 
-3
- 
-GM
-​
-  
-r
- 
-This second-order ODE can be integrated numerically using methods like Runge-Kutta.
+* **Elliptical**: $E < 0$
+* **Parabolic**: $E = 0$
+* **Hyperbolic**: $E > 0$
 
-🚀 Orbital Trajectories Overview
-The type of trajectory is determined by the specific mechanical energy:
+Where:
 
-𝜀
-=
-𝑣
-2
-2
-−
-𝐺
-𝑀
-𝑟
-ε= 
-2
-v 
-2
- 
-​
- − 
-r
-GM
-​
- 
-Energy 
-𝜀
-ε	Trajectory Type	Description
-𝜀
-<
-0
-ε<0	Elliptical orbit	Bound orbit
-𝜀
-=
-0
-ε=0	Parabolic escape	Marginal escape
-𝜀
->
-0
-ε>0	Hyperbolic path	Escape trajectory
+$$
+E = \frac{1}{2}mv^2 - \frac{GMm}{r}
+$$
 
-🧮 Python Simulation
-Numerical Integration Using Runge-Kutta
-![alt text](image-4.png)
-📊 Outputs and Interpretation
-Visual Result:
-Suborbital: Falls back to Earth.
+---
 
-Circular: Maintains orbit.
+### Python Code:
 
-Escape (parabolic): Reaches escape trajectory.
+```python
+import numpy as np
 
-Hyperbolic: High-speed escape.
+def total_energy(v, r, M, m=1):
+    G = 6.67430e-11
+    kinetic = 0.5 * m * v**2
+    potential = -G * M * m / r
+    return kinetic + potential
+```
+![alt text](image-15.png)
+---
 
-Energy and Trajectory Table:
-Case	Velocity (m/s)	Energy ε	Trajectory
-Suborbital	6500	< 0	Elliptic → Earth impact
-Circular	~7660	< 0	Elliptic Orbit
-Escape	~10800	= 0	Parabolic Escape
-Hyperbolic	12000	> 0	Hyperbolic Escape
+### Explanation:
 
-🌍 Applications
-Orbital Insertion: Used in satellite deployment (LEO, MEO, GEO).
+We derive orbit type from the total mechanical energy of the payload. If energy is negative, it is **bound** (elliptical); if positive, it will **escape** Earth (hyperbolic). This helps mission planners decide if a payload re-enters or escapes.
 
-Space Missions: Escape velocity needed for Mars or interstellar travel.
+---
 
-Reentry Capsules: Ensures safe Earth return by choosing suborbital paths.
+## Task 2: Numerical Analysis of Trajectory
 
-Debris Mitigation: Helps design controlled deorbit burns.
+### Numerical Simulation:
 
-🧠 Summary
-Deliverable	Included
-Equations of motion	✔
-Simulation tool in Python	✔
-Visualization of trajectories	✔
-Classification of motion types	✔
-Real-world applications	✔
+We simulate motion using Newton’s gravitational law and solve with a numerical integrator (e.g., Euler/Verlet/RK4).
+
+---
+
+### Python Code (Runge-Kutta example):
+
+```python
+import matplotlib.pyplot as plt
+
+G = 6.67430e-11
+M = 5.972e24  # Earth mass
+R_earth = 6.371e6  # Earth radius
+
+def acceleration(x, y):
+    r = np.sqrt(x**2 + y**2)
+    a = -G * M / r**3
+    return a * x, a * y
+
+def simulate_orbit(x0, y0, vx0, vy0, dt=1, steps=5000):
+    x, y = x0, y0
+    vx, vy = vx0, vy0
+    traj_x, traj_y = [], []
+
+    for _ in range(steps):
+        ax, ay = acceleration(x, y)
+        vx += ax * dt
+        vy += ay * dt
+        x += vx * dt
+        y += vy * dt
+        traj_x.append(x)
+        traj_y.append(y)
+        if np.sqrt(x**2 + y**2) < R_earth:  # collision
+            break
+
+    return traj_x, traj_y
+
+# Initial conditions: just above Earth
+x0, y0 = R_earth + 300000, 0
+vx0, vy0 = 0, 7800  # orbital speed ~7.8 km/s
+
+x_traj, y_traj = simulate_orbit(x0, y0, vx0, vy0)
+
+plt.plot(x_traj, y_traj)
+circle = plt.Circle((0, 0), R_earth, color='blue', alpha=0.3)
+plt.gca().add_artist(circle)
+plt.gca().set_aspect('equal')
+plt.title("Payload Trajectory near Earth")
+plt.xlabel("x (m)")
+plt.ylabel("y (m)")
+plt.grid()
+plt.show()
+```
+![alt text](image-16.png)
+---
+
+### Explanation:
+
+This simulates the 2D motion of a payload under gravity. Depending on initial speed and direction, the result could be **orbit, escape**, or **collision**. Here, \~7.8 km/s leads to near-circular orbit.
+
+---
+
+## Task 3: Practical Applications
+
+### Real-World Scenarios:
+
+* **Elliptical Orbits** → satellites
+* **Re-entry** → de-orbit payload (e.g., ISS modules)
+* **Escape** → deep space missions (Voyager, probes)
+
+We can analyze:
+
+* Required velocity for return to Earth (below $v_1$)
+* Stability of orbit (around $v_1$)
+* Escape from Earth (above $v_2$)
+
+---
+
+### Python Code to Test Multiple Speeds:
+
+```python
+speeds = [6500, 7800, 11200]  # m/s: sub-orbital, orbital, escape
+colors = ['green', 'blue', 'red']
+
+for v, color in zip(speeds, colors):
+    x_t, y_t = simulate_orbit(x0, y0, 0, v)
+    plt.plot(x_t, y_t, label=f"{v/1000:.1f} km/s", color=color)
+
+earth = plt.Circle((0, 0), R_earth, color='gray', alpha=0.4)
+plt.gca().add_artist(earth)
+plt.gca().set_aspect('equal')
+plt.legend()
+plt.xlabel("x (m)")
+plt.ylabel("y (m)")
+plt.title("Different Initial Speeds → Different Trajectories")
+plt.grid()
+plt.show()
+```
+![alt text](image-17.png)
+---
+
+### Explanation:
+
+The payload’s trajectory type changes dramatically with initial velocity. This is key for space engineers — from **orbital insertion** to **planetary escape** planning.
+
+---
+
+## Task 4: Implementation & Visualization
+
+### Summary Code with Classification:
+
+```python
+def classify_trajectory(v0, r0=R_earth + 300000):
+    E = total_energy(v0, r0, M)
+    if E < 0:
+        return "Elliptical"
+    elif E == 0:
+        return "Parabolic"
+    else:
+        return "Hyperbolic"
+
+for v in [6500, 7800, 11200]:
+    print(f"v = {v} m/s → {classify_trajectory(v)}")
+```
+![alt text](image-18.png)
+---
+
+### Explanation:
+
+This tool predicts trajectory type based on initial speed. It’s a simple yet powerful simulation assistant for satellite or payload planning.
+
+---
+
+### Optional: 3D Simulation or Interactive Orbit Visualizer
+
+We can also extend this into a Jupyter Notebook interface or interactive GUI using tools like Plotly or VPython.
+
+---
+
