@@ -172,6 +172,234 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<p>🌌 Orbital Period vs. Radius: Kepler’s Third Law and Gravitational Dynamics
+1. 🧠 Theoretical Foundation
+Newtonian Derivation of Kepler’s Third Law (for Circular Orbits)
+From Newton’s Law of Gravitation and centripetal force balance for a body in uniform circular motion:</p>
+<p>𝐹
+gravity
+=
+𝐹
+centripetal
+⇒
+𝐺
+𝑀
+𝑚
+𝑟
+2
+=
+𝑚
+𝑣
+2
+𝑟
+F 
+gravity
+​
+ =F 
+centripetal
+​
+ ⇒ 
+r 
+2</p>
+<p>GMm
+​
+ = 
+r
+mv 
+2</p>
+<p>​</p>
+<p>Cancel 
+𝑚
+m and solve for 
+𝑣
+v:</p>
+<h1 id="v">𝑣</h1>
+<p>𝐺
+𝑀
+𝑟
+v= 
+r
+GM
+​</p>
+<p>​</p>
+<p>Orbital period 
+𝑇
+T is:</p>
+<h1 id="t">𝑇</h1>
+<p>2
+𝜋
+𝑟
+𝑣
+=
+2
+𝜋
+𝑟
+𝑟
+𝐺
+𝑀
+=
+2
+𝜋
+𝑟
+3
+𝐺
+𝑀
+T= 
+v
+2πr
+​
+ =2πr 
+GM
+r
+​</p>
+<p>​
+ =2π 
+GM
+r 
+3</p>
+<p>​</p>
+<p>​</p>
+<p>Kepler’s Third Law (Mathematical Form)
+𝑇
+2
+=
+4
+𝜋
+2
+𝐺
+𝑀
+𝑟
+3
+T 
+2
+ = 
+GM
+4π 
+2</p>
+<p>​
+ r 
+3</p>
+<p>Where:</p>
+<p>𝑇
+T: orbital period</p>
+<p>𝑟
+r: orbital radius</p>
+<p>𝑀
+M: mass of the central body</p>
+<p>𝐺
+G: gravitational constant</p>
+<ol>
+<li>🌠 Implications in Astronomy
+Mass Calculation: By measuring 
+𝑇
+T and 
+𝑟
+r, the mass of a planet/star can be determined.</li>
+</ol>
+<p>Exoplanet Detection: Kepler’s Law helps infer planetary characteristics from transit data.</p>
+<p>Satellite Launching: Determines altitude and velocity for geostationary orbits.</p>
+<p>Galactic Dynamics: Used to infer mass distribution in galaxies (including dark matter).</p>
+<ol>
+<li>🌍 Real-World Examples
+(a) Moon-Earth System:
+𝑟
+≈
+3.84
+×
+10
+8
+r≈3.84×10 
+8
+  m</li>
+</ol>
+<p>𝑇
+≈
+27.3
+T≈27.3 days</p>
+<p>(b) Planets in the Solar System:
+Compare 
+𝑇
+2
+T 
+2
+  vs. 
+𝑟
+3
+r 
+3
+  for Mercury, Earth, Jupiter, etc.</p>
+<ol>
+<li>💻 Python Simulation
+Here's a script to simulate circular orbits and verify the 
+𝑇
+2
+∝
+𝑟
+3
+T 
+2
+ ∝r 
+3
+  relation:
+  ]<img alt="alt text" src="../image.png"/>
+<img alt="alt text" src="../image-1.png"/></li>
+<li>
+<p>📊 Visualizations
+Graph   Description
+T² vs r³    Verifies linear relationship (Kepler’s 3rd Law).
+log(T) vs log(r)    Should yield a straight line with slope ≈ 1.5.
+Orbit visualization (optional)  Can simulate 2D circular motion using parametric plots.</p>
+</li>
+<li>
+<p>🔭 Extension to Elliptical Orbits
+Kepler's Third Law for elliptical orbits still holds if 
+𝑟
+r is replaced with the semi-major axis 
+𝑎
+a:</p>
+</li>
+</ol>
+<p>𝑇
+2
+=
+4
+𝜋
+2
+𝐺
+𝑀
+𝑎
+3
+T 
+2
+ = 
+GM
+4π 
+2</p>
+<p>​
+ a 
+3</p>
+<p>This applies to:</p>
+<p>Eccentric planetary orbits</p>
+<p>Comets (e.g., Halley’s)</p>
+<p>Binary star systems</p>
+<ol>
+<li>✅ Deliverables Summary
+Component   Description
+Derivation  Newton’s laws → Kepler’s Third Law
+Simulations Python model for 
+𝑇
+2
+T 
+2
+  vs. 
+𝑟
+3
+r 
+3</li>
+</ol>
+<p>Real-world data Planets and Moon orbits
+Graphs  Confirm theoretical relationship
+Extensions  Elliptical orbits, satellite applications</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
