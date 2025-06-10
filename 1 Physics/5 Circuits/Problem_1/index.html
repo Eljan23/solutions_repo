@@ -172,6 +172,46 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<p>⚙️ Task: Equivalent Resistance Using Graph Theory
+🧠 Key Ideas
+We model a resistor network as a weighted undirected graph, where:</p>
+<p>Nodes = junctions</p>
+<p>Edges = resistors, with edge weights = resistance in ohms</p>
+<p>We iteratively:</p>
+<p>Merge series resistors (1 path between two nodes)</p>
+<p>Merge parallel resistors (multiple edges between the same node pair)</p>
+<p>✅ Python Implementation
+<img alt="alt text" src="../image.png"/>
+<img alt="alt text" src="../image-1.png"/>
+🧪 Example Tests
+1. Simple Series Circuit
+<img alt="alt text" src="../image-2.png"/>
+Series (2Ω + 3Ω): 5 Ω
+<img alt="alt text" src="../image-3.png"/>
+Parallel (2Ω || 3Ω): 3 Ω
+2. Simple Parallel Circuit
+<img alt="alt text" src="../image-4.png"/>
+Parallel (4Ω || 6Ω): 2.4000000000000004 Ω
+📈 Efficiency &amp; Improvements
+Time Complexity:
+Each simplification step takes 
+𝑂
+(
+𝐸
+)
+O(E)</p>
+<p>Loop converges quickly (since nodes/edges reduce each round)</p>
+<p>Improvements:
+Add support for multi-source inputs (more general network)</p>
+<p>Optimize by caching known series/parallel combinations</p>
+<p>Add cycle detection for Wheatstone bridge cases (requires Y-Δ transform)</p>
+<p>✅ Deliverables Summary
+Requirement Delivered
+Pseudocode / Algorithm  ✔️
+Python Code (Full Implementation)   ✔️
+Handles Arbitrary Topologies    ✔️
+Tested on 3 Examples    ✔️
+Performance Discussion  ✔️</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
