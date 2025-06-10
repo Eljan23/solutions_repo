@@ -172,6 +172,141 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<p>🌊 Problem 1: Interference Patterns on a Water Surface from Point Sources at Regular Polygon Vertices
+✨ Motivation
+Wave interference on a water surface visually demonstrates how coherent waves interact—leading to constructive interference (amplification) or destructive interference (cancellation). By arranging multiple point sources at the vertices of a regular polygon, we can explore symmetrical and complex interference patterns.</p>
+<p>Such analysis helps us understand:</p>
+<p>Wave superposition</p>
+<p>Phase relationships</p>
+<p>Applications in acoustics, optics, and antenna design</p>
+<p>📐 Geometry and Wave Model
+Regular Polygon:
+Let’s choose a regular pentagon (5 sources). Each source is located at an angle:</p>
+<p>𝜃
+𝑖
+=
+2
+𝜋
+𝑖
+𝑁
+,
+𝑖
+=
+0
+,
+1
+,
+…
+,
+𝑁
+−
+1
+θ 
+i
+​
+ = 
+N
+2πi
+​
+ ,i=0,1,…,N−1
+Radius 
+𝑅
+R: distance from center to each vertex.</p>
+<p>Wave from each source:
+𝜂
+𝑖
+(
+𝑥
+,
+𝑦
+,
+𝑡
+)
+=
+𝐴
+cos
+⁡
+(
+𝑘
+𝑟
+𝑖
+−
+𝜔
+𝑡
++
+𝜙
+)
+η 
+i
+​
+ (x,y,t)=Acos(kr 
+i
+​
+ −ωt+ϕ)
+𝐴
+A: Amplitude</p>
+<h1 id="k">𝑘</h1>
+<p>2
+𝜋
+𝜆
+k= 
+λ
+2π
+​
+ : Wave number</p>
+<h1 id="_1">𝜔</h1>
+<p>2
+𝜋
+𝑓
+ω=2πf: Angular frequency</p>
+<p>𝑟
+𝑖
+r 
+i
+​
+ : Distance from source 
+𝑖
+i to point 
+(
+𝑥
+,
+𝑦
+)
+(x,y)</p>
+<p>𝜙
+ϕ: Phase (0 for all sources, coherent waves)</p>
+<p>🧮 Python Simulation
+Code (Interference from Regular Pentagon)
+<img alt="alt text" src="../image.png"/>
+📊 Observations
+Interference Pattern Insights:
+Constructive Interference: Bright/red or blue regions = maxima/minima in wave displacement.</p>
+<p>Destructive Interference: Zones where colors cancel = nodes.</p>
+<p>Symmetry: Matches the regular polygon symmetry (pentagonal).</p>
+<p>Change Parameters to Explore:
+Increase number of sources → more intricate patterns.</p>
+<p>Adjust radius 
+𝑅
+R → changes distance and spacing of wavefronts.</p>
+<p>Try triangle (N=3), square (N=4), or hexagon (N=6) for comparison.</p>
+<p>🧠 Key Concepts
+Term    Meaning
+Coherent waves  Same frequency and constant phase shift
+Superposition   Sum of displacements at each point
+Wavefront   A line or surface of equal phase
+Node    Destructive interference point (zero η)</p>
+<p>🌍 Applications
+Sonar and radar beam forming</p>
+<p>Diffraction gratings in optics</p>
+<p>Loudspeaker arrays</p>
+<p>Quantum wave interference (multi-slit experiments)</p>
+<p>✅ Deliverables Summary
+Deliverable Status
+Wave equations for regular polygon sources  ✔
+Simulation script (Python)  ✔
+Visualization of interference pattern   ✔
+Physical interpretation ✔
+Suggestions for further exploration ✔</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
