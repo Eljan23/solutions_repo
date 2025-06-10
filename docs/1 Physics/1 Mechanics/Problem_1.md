@@ -1,372 +1,200 @@
 # Problem 1
-📘 Projectile Motion: Range vs. Angle of Projection
-1. 🎓 Theoretical Foundation
-Equations of Motion
-Assuming no air resistance and launch from ground level:
+Əla! İndi hər 4 alt tapşırığı da istədiyin kimi – **bağlı başlıq**, **riyazi formul**, **Python kodu**, və **ingilis izahı** ilə ardıcıllıqla verirəm.
 
-Initial velocity: 
-𝑣
-0
-v 
-0
-​
- 
+---
 
-Projection angle: 
-𝜃
-θ
+## Task 1: Theoretical Foundation
 
-Gravitational acceleration: 
-𝑔
-g
+### Mathematical Formulation:
 
-Break down the initial velocity:
+Projectile motion equations without air resistance and with launch height $h = 0$:
 
-𝑣
-0
-𝑥
-=
-𝑣
-0
-cos
-⁡
-(
-𝜃
-)
-v 
-0x
-​
- =v 
-0
-​
- cos(θ)
+$$
+x(t) = v_0 \cos(\theta) t
+$$
 
-𝑣
-0
-𝑦
-=
-𝑣
-0
-sin
-⁡
-(
-𝜃
-)
-v 
-0y
-​
- =v 
-0
-​
- sin(θ)
+$$
+y(t) = v_0 \sin(\theta) t - \frac{1}{2} g t^2
+$$
 
-Time of Flight:
-Since projectile returns to the ground (symmetric motion):
+Range is when $y(t) = 0$ (excluding $t = 0$):
 
-𝑇
-=
-2
-𝑣
-0
-sin
-⁡
-(
-𝜃
-)
-𝑔
-T= 
-g
-2v 
-0
-​
- sin(θ)
-​
- 
-Range 
-𝑅
-R:
-𝑅
-=
-𝑣
-0
-𝑥
-⋅
-𝑇
-=
-𝑣
-0
-cos
-⁡
-(
-𝜃
-)
-⋅
-2
-𝑣
-0
-sin
-⁡
-(
-𝜃
-)
-𝑔
-=
-𝑣
-0
-2
-sin
-⁡
-(
-2
-𝜃
-)
-𝑔
-R=v 
-0x
-​
- ⋅T=v 
-0
-​
- cos(θ)⋅ 
-g
-2v 
-0
-​
- sin(θ)
-​
- = 
-g
-v 
-0
-2
-​
- sin(2θ)
-​
- 
-This is the key formula for range as a function of angle.
+$$
+t = \frac{2 v_0 \sin(\theta)}{g} \Rightarrow R = v_0 \cos(\theta) \cdot \frac{2 v_0 \sin(\theta)}{g} = \frac{v_0^2 \sin(2\theta)}{g}
+$$
 
-Family of Solutions
-Each pair 
-(
-𝑣
-0
-,
-𝜃
-)
-(v 
-0
-​
- ,θ) generates a unique trajectory:
+---
 
-For fixed 
-𝑣
-0
-v 
-0
-​
- , range is maximized at 
-𝜃
-=
-45
-∘
-θ=45 
-∘
- .
+### Python Code:
 
-𝜃
-θ and 
-90
-∘
-−
-𝜃
-90 
-∘
- −θ yield the same range (e.g., 30° and 60°).
+```python
+import numpy as np
+import matplotlib.pyplot as plt
 
-2. 📊 Range Analysis
-Effect of Initial Velocity:
-𝑅
-∝
-𝑣
-0
-2
-⇒
-Doubling 
-𝑣
-0
-⇒
-4x range increase
-R∝v 
-0
-2
-​
- ⇒Doubling v 
-0
-​
- ⇒4x range increase
-Effect of Gravitational Acceleration:
-𝑅
-∝
-1
-𝑔
-⇒
-Weaker gravity (e.g., Moon) yields larger range
-R∝ 
-g
-1
-​
- ⇒Weaker gravity (e.g., Moon) yields larger range
-Graphical Behavior:
-𝑅
-(
-𝜃
-)
-R(θ) is symmetric about 
-45
-∘
-45 
-∘
- 
+v0 = 20  # m/s
+g = 9.81  # m/s^2
+angles_deg = np.linspace(0, 90, 500)
+angles_rad = np.radians(angles_deg)
 
-Maximum at 
-𝜃
-=
-45
-∘
-θ=45 
-∘
- 
+ranges = (v0**2) * np.sin(2 * angles_rad) / g
 
-𝑅
-(
-0
-∘
-)
-=
-𝑅
-(
-90
-∘
-)
-=
-0
-R(0 
-∘
- )=R(90 
-∘
- )=0
+plt.plot(angles_deg, ranges)
+plt.xlabel('Angle (degrees)')
+plt.ylabel('Range (meters)')
+plt.title('Range vs Angle of Projection')
+plt.grid(True)
+plt.show()
+```
+![alt text](image-3.png)
+---
 
-3. 🌍 Practical Applications
-Non-ideal Terrain:
-If launched from height 
-ℎ
-h, vertical motion modifies to:
+### Explanation:
 
-𝑦
-(
-𝑡
-)
-=
-𝑣
-0
-sin
-⁡
-(
-𝜃
-)
-𝑡
-−
-1
-2
-𝑔
-𝑡
-2
-+
-ℎ
-y(t)=v 
-0
-​
- sin(θ)t− 
-2
-1
-​
- gt 
-2
- +h
-Solve 
-𝑦
-(
-𝑡
-)
-=
-0
-y(t)=0 for new flight time, then compute range.
+We derived the formula for projectile range as a function of angle. The range is maximum at 45°, and varies with $\sin(2\theta)$.
 
-Air Resistance:
-Adds drag force 
-𝐹
-𝑑
-=
-−
-𝑘
-𝑣
-F 
-d
-​
- =−kv
+---
 
-No closed-form solution: need numerical methods (e.g., Euler, RK4)
+## Task 2: Analysis of the Range
 
-Real-World Relevance:
-Sports (soccer, golf)
+### Mathematical Formulation:
 
-Ballistics and artillery
+Range formula:
 
-Spacecraft launch angles (initial trajectories)
+$$
+R(\theta) = \frac{v_0^2 \sin(2\theta)}{g}
+$$
 
-4. 💻 Implementation in Python
-Here’s a simple Python script using Matplotlib and NumPy:
-![alt text](image.png)
-5. 🚧 Limitations and Extensions
-Limitations:
-Ignores air resistance
+* Increasing $v_0$ increases range quadratically.
+* Increasing $g$ decreases range.
+* Maximum at $\theta = 45^\circ$.
+![alt text](image-4.png)
+---
 
-Assumes flat terrain
+### Python Code:
 
-Assumes constant 
-𝑔
-g
+```python
+def compute_range(v0, g=9.81):
+    angles = np.radians(np.linspace(0, 90, 500))
+    return (v0**2 * np.sin(2 * angles)) / g
 
-Extensions:
-Add drag using numerical integration
+plt.figure(figsize=(8,5))
+for v in [10, 20, 30]:
+    plt.plot(np.linspace(0, 90, 500), compute_range(v), label=f'v0 = {v} m/s')
+plt.xlabel('Angle (degrees)')
+plt.ylabel('Range (m)')
+plt.title('Effect of Initial Velocity on Range')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
 
-Vary terrain using elevation functions
+---
 
-Use simulation platforms (e.g., PyBullet) for more realism
+### Explanation:
 
-✅ Deliverables Summary
-Component	Description
-Markdown/Notebook	Includes theory, code, plots
-Family of Solutions	Parametric dependence of 
-𝑅
-R on 
-𝜃
-θ, 
-𝑣
-0
-v 
-0
-​
- , 
-𝑔
-g
-Graphical Representation	Range vs angle plots for varying 
-𝑣
-0
-v 
-0
-​
- , 
-𝑔
-g
-Limitations and Enhancements	Drag, terrain, varying gravity, real-world applicability
+This code compares how initial velocity affects projectile range. A higher $v_0$ produces a much longer range. The angle for max range stays at 45° regardless of $v_0$.
+
+---
+
+## Task 3: Practical Applications
+
+### Mathematical Formulation:
+
+If projectile is launched from height $h > 0$:
+
+$$
+y(t) = v_0 \sin(\theta) t - \frac{1}{2} g t^2 + h
+$$
+
+Solving $y(t) = 0$ gives time of flight $t_f$, then:
+
+$$
+R = v_0 \cos(\theta) \cdot t_f
+$$
+
+No analytical formula; use numerical root-finding.
+![alt text](image-5.png)
+---
+
+### Python Code:
+
+```python
+from scipy.optimize import fsolve
+
+def time_of_flight(theta, v0, h, g=9.81):
+    def height_eq(t): return v0*np.sin(theta)*t - 0.5*g*t**2 + h
+    t_guess = 2*v0*np.sin(theta)/g
+    t_flight = fsolve(height_eq, t_guess)[0]
+    return t_flight
+
+angles = np.radians(np.linspace(10, 80, 100))
+v0 = 20
+h = 5
+ranges = []
+
+for theta in angles:
+    t_f = time_of_flight(theta, v0, h)
+    R = v0 * np.cos(theta) * t_f
+    ranges.append(R)
+
+plt.plot(np.degrees(angles), ranges)
+plt.xlabel('Angle (degrees)')
+plt.ylabel('Range (m)')
+plt.title('Range from Elevated Launch (h = 5 m)')
+plt.grid(True)
+plt.show()
+```
+
+---
+
+### Explanation:
+
+We simulate launching from a height (e.g., a cliff). The range is longer than from ground-level. This models real-world scenarios like artillery or cliff jumps.
+
+---
+
+## Task 4: Implementation
+
+### Mathematical Formulation:
+
+Simulate full 2D projectile path with:
+
+$$
+x(t) = v_0 \cos(\theta) t,\quad y(t) = v_0 \sin(\theta) t - \frac{1}{2} g t^2
+$$
+
+Terminate when $y(t) \leq 0$.
+
+---
+
+### Python Code:
+
+```python
+def simulate_trajectory(v0, theta_deg, g=9.81):
+    theta = np.radians(theta_deg)
+    t_flight = 2 * v0 * np.sin(theta) / g
+    t = np.linspace(0, t_flight, 300)
+    x = v0 * np.cos(theta) * t
+    y = v0 * np.sin(theta) * t - 0.5 * g * t**2
+    return x, y
+
+plt.figure(figsize=(8,5))
+for angle in [30, 45, 60]:
+    x, y = simulate_trajectory(20, angle)
+    plt.plot(x, y, label=f'{angle}°')
+
+plt.xlabel('Horizontal Distance (m)')
+plt.ylabel('Vertical Height (m)')
+plt.title('Projectile Trajectories for Different Angles')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+![alt text](image-6.png)
+---
+
+### Explanation:
+
+This visualizes full projectile paths for multiple angles. It shows how different launch angles affect both the height and the range of the trajectory.
+
+---
