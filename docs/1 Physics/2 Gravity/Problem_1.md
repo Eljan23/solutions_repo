@@ -1,4 +1,3 @@
-Əla, Elcan! İndi keçək **Gravity → Problem 1: Orbital Period and Orbital Radius** məsələsinə. Yenə əvvəlki tapşırıqlarda olduğu kimi hər bir alt bölməni aşağıdakı ardıcıllıqla təqdim edirəm: **riyazi formul**, **Python kodu**, və **İngilis dildə izah**. Başlayaq:
 
 ---
 
