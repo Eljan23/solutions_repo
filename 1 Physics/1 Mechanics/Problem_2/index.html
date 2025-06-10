@@ -172,6 +172,298 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-2">Problem 2</h1>
+<p>🧭 Forced Damped Pendulum: From Periodic Motion to Chaos
+1. 🎓 Theoretical Foundation
+Governing Equation
+The motion of a forced damped pendulum is described by the nonlinear differential equation:</p>
+<p>𝑑
+2
+𝜃
+𝑑
+𝑡
+2
++
+𝛽
+𝑑
+𝜃
+𝑑
+𝑡
++
+𝜔
+0
+2
+sin
+⁡
+𝜃
+=
+𝐴
+cos
+⁡
+(
+𝜔
+𝑡
+)
+dt 
+2</p>
+<p>d 
+2
+ θ
+​
+ +β 
+dt
+dθ
+​
+ +ω 
+0
+2
+​
+ sinθ=Acos(ωt)
+Where:</p>
+<p>𝜃
+(
+𝑡
+)
+θ(t): angle of displacement</p>
+<p>𝛽
+β: damping coefficient</p>
+<p>𝜔
+0
+=
+𝑔
+/
+𝐿
+ω 
+0
+​
+ = 
+g/L
+​
+ : natural frequency of the pendulum</p>
+<p>𝐴
+A: amplitude of the external driving torque</p>
+<p>𝜔
+ω: driving frequency</p>
+<p>Small-Angle Approximation
+For small angles (
+sin
+⁡
+𝜃
+≈
+𝜃
+sinθ≈θ), the equation simplifies to:</p>
+<p>𝑑
+2
+𝜃
+𝑑
+𝑡
+2
++
+𝛽
+𝑑
+𝜃
+𝑑
+𝑡
++
+𝜔
+0
+2
+𝜃
+=
+𝐴
+cos
+⁡
+(
+𝜔
+𝑡
+)
+dt 
+2</p>
+<p>d 
+2
+ θ
+​
+ +β 
+dt
+dθ
+​
+ +ω 
+0
+2
+​
+ θ=Acos(ωt)
+This is a driven damped harmonic oscillator, and it has a steady-state solution:</p>
+<p>𝜃
+(
+𝑡
+)
+=
+𝜃
+steady
+(
+𝑡
+)
+=
+𝐵
+cos
+⁡
+(
+𝜔
+𝑡
+−
+𝛿
+)
+θ(t)=θ 
+steady
+​
+ (t)=Bcos(ωt−δ)
+Where:</p>
+<h1 id="b">𝐵</h1>
+<p>𝐴
+(
+𝜔
+0
+2
+−
+𝜔
+2
+)
+2
++
+𝛽
+2
+𝜔
+2
+B= 
+(ω 
+0
+2
+​
+ −ω 
+2
+ ) 
+2
+ +β 
+2
+ ω 
+2</p>
+<p>​</p>
+<p>A
+​</p>
+<h1 id="_1">𝛿</h1>
+<p>tan
+⁡
+−
+1
+(
+𝛽
+𝜔
+𝜔
+0
+2
+−
+𝜔
+2
+)
+δ=tan 
+−1
+ ( 
+ω 
+0
+2
+​
+ −ω 
+2</p>
+<p>βω
+​
+ )</p>
+<p>Maximum amplitude occurs at resonance:</p>
+<p>𝜔
+res
+=
+𝜔
+0
+2
+−
+𝛽
+2
+2
+ω 
+res
+​
+ = 
+ω 
+0
+2
+​
+ − 
+2
+β 
+2</p>
+<p>​</p>
+<p>​</p>
+<ol>
+<li>🔬 Dynamics Analysis
+Influence of Parameters:
+Damping 
+𝛽
+β: suppresses motion, reduces peak amplitude.</li>
+</ol>
+<p>Driving Amplitude 
+𝐴
+A: higher values can push system into chaotic regimes.</p>
+<p>Driving Frequency 
+𝜔
+ω: determines whether motion is synchronized or chaotic.</p>
+<p>Types of Behavior:
+Periodic: motion repeats over time.</p>
+<p>Quasiperiodic: complex oscillation without repetition.</p>
+<p>Chaotic: sensitive dependence on initial conditions; no clear pattern.</p>
+<ol>
+<li>🌍 Practical Applications
+Energy Harvesting: devices convert oscillations into electrical energy.</li>
+</ol>
+<p>Engineering Structures: bridges, buildings under periodic forces.</p>
+<p>RLC Circuits: analogous equations describe voltage/current.</p>
+<p>Biomechanics: modeling leg movement in walking (e.g., gait analysis).</p>
+<ol>
+<li>💻 Implementation (Python)
+Here’s a Python script using scipy.integrate.solve_ivp to simulate and visualize behavior:
+<img alt="alt text" src="../image-1.png"/>
+<img alt="alt text" src="../image-2.png"/></li>
+<li>🧩 Advanced Visualizations
+Phase Portrait: reveals oscillatory and chaotic states.</li>
+</ol>
+<p>Poincaré Section: reveals regular vs chaotic motion.</p>
+<p>Bifurcation Diagram (optional): plot 
+𝜃
+θ vs driving force/frequency to study transitions.</p>
+<ol>
+<li>⚠️ Limitations and Extensions
+Limitation  Suggested Extension
+Ignores nonlinear damping   Add 
+−
+𝛼
+𝜔
+2
+−αω 
+2
+  term
+Periodic force only Introduce random or pulsed forcing
+Single pendulum Study coupled pendulums or pendulum on cart
+No energy input/output tracking Track system energy: 
+𝐸
+(
+𝑡
+)
+E(t)</li>
+</ol>
+<p>✅ Deliverables Summary
+Component   Description
+Theoretical Derivations Small-angle solutions + resonance
+Code Implementation RK45 simulation of pendulum
+Graphical Output    θ(t), phase plot, Poincaré section
+Dynamic Analysis    How parameters affect motion
+Limitations &amp; Extensions    Chaos, real-world constraints</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
