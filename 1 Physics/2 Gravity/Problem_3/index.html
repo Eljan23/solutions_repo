@@ -172,6 +172,119 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-3">Problem 3</h1>
+<p>🌌 Problem 3: Trajectories of a Freely Released Payload Near Earth
+✨ Motivation
+When a payload is released from a spacecraft or rocket near Earth, its trajectory can vary dramatically depending on the initial velocity and direction. The possible outcomes include:</p>
+<p>Elliptical orbits (payload remains bound),</p>
+<p>Parabolic trajectory (borderline escape),</p>
+<p>Hyperbolic trajectory (escape path),</p>
+<p>Suborbital trajectories (reentry to Earth).</p>
+<p>Understanding these trajectories is essential for:</p>
+<p>Satellite deployment,</p>
+<p>Space mission planning,</p>
+<p>Reentry capsule design.</p>
+<p>⚖️ Theoretical Foundation
+Newton's Law of Universal Gravitation:
+𝐹
+⃗
+=
+−
+𝐺
+𝑀
+𝑚
+𝑟
+2
+𝑟
+^
+F
+ =− 
+r 
+2</p>
+<p>GMm
+​</p>
+<p>r
+^</p>
+<p>Acceleration:
+𝑎
+⃗
+=
+−
+𝐺
+𝑀
+𝑟
+3
+𝑟
+⃗
+a
+ =− 
+r 
+3</p>
+<p>GM
+​</p>
+<p>r</p>
+<p>This second-order ODE can be integrated numerically using methods like Runge-Kutta.</p>
+<p>🚀 Orbital Trajectories Overview
+The type of trajectory is determined by the specific mechanical energy:</p>
+<h1 id="_1">𝜀</h1>
+<p>𝑣
+2
+2
+−
+𝐺
+𝑀
+𝑟
+ε= 
+2
+v 
+2</p>
+<p>​
+ − 
+r
+GM
+​</p>
+<p>Energy 
+𝜀
+ε   Trajectory Type Description
+𝜀
+&lt;
+0
+ε&lt;0 Elliptical orbit    Bound orbit
+𝜀
+=
+0
+ε=0 Parabolic escape    Marginal escape
+𝜀</p>
+<blockquote>
+<p>0
+ε&gt;0 Hyperbolic path Escape trajectory</p>
+</blockquote>
+<p>🧮 Python Simulation
+Numerical Integration Using Runge-Kutta
+<img alt="alt text" src="../image-4.png"/>
+📊 Outputs and Interpretation
+Visual Result:
+Suborbital: Falls back to Earth.</p>
+<p>Circular: Maintains orbit.</p>
+<p>Escape (parabolic): Reaches escape trajectory.</p>
+<p>Hyperbolic: High-speed escape.</p>
+<p>Energy and Trajectory Table:
+Case    Velocity (m/s)  Energy ε    Trajectory
+Suborbital  6500    &lt; 0 Elliptic → Earth impact
+Circular    ~7660   &lt; 0 Elliptic Orbit
+Escape  ~10800  = 0 Parabolic Escape
+Hyperbolic  12000   &gt; 0 Hyperbolic Escape</p>
+<p>🌍 Applications
+Orbital Insertion: Used in satellite deployment (LEO, MEO, GEO).</p>
+<p>Space Missions: Escape velocity needed for Mars or interstellar travel.</p>
+<p>Reentry Capsules: Ensures safe Earth return by choosing suborbital paths.</p>
+<p>Debris Mitigation: Helps design controlled deorbit burns.</p>
+<p>🧠 Summary
+Deliverable Included
+Equations of motion ✔
+Simulation tool in Python   ✔
+Visualization of trajectories   ✔
+Classification of motion types  ✔
+Real-world applications ✔</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
