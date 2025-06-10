@@ -143,5 +143,5 @@ particle.plot_trajectory_2d(pos[:,:2], "Particle Trajectory in Crossed E and B F
 3. **Multiple particles**: Simulate particle beams or plasmas
 4. **Time-varying fields**: Study RF cavities or pulsed field devices
 5. **Collisions**: Add interaction terms for more realistic plasma simulations
-
+z
 This simulation framework provides a foundation for exploring more complex electromagnetic systems relevant to both fundamental physics and engineering applications.
