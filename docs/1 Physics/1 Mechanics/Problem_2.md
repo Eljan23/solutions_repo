@@ -1,323 +1,205 @@
-# Problem 2
-🧭 Forced Damped Pendulum: From Periodic Motion to Chaos
-1. 🎓 Theoretical Foundation
-Governing Equation
-The motion of a forced damped pendulum is described by the nonlinear differential equation:
 
-𝑑
-2
-𝜃
-𝑑
-𝑡
-2
-+
-𝛽
-𝑑
-𝜃
-𝑑
-𝑡
-+
-𝜔
-0
-2
-sin
-⁡
-𝜃
-=
-𝐴
-cos
-⁡
-(
-𝜔
-𝑡
-)
-dt 
-2
- 
-d 
-2
- θ
-​
- +β 
-dt
-dθ
-​
- +ω 
-0
-2
-​
- sinθ=Acos(ωt)
-Where:
+---
 
-𝜃
-(
-𝑡
-)
-θ(t): angle of displacement
+## Task 1: Theoretical Foundation
 
-𝛽
-β: damping coefficient
+### Mathematical Formulation:
 
-𝜔
-0
-=
-𝑔
-/
-𝐿
-ω 
-0
-​
- = 
-g/L
-​
- : natural frequency of the pendulum
+The general equation for a **forced damped pendulum** is:
 
-𝐴
-A: amplitude of the external driving torque
+$$
+\frac{d^2\theta}{dt^2} + \beta \frac{d\theta}{dt} + \omega_0^2 \sin(\theta) = A \cos(\omega t)
+$$
 
-𝜔
-ω: driving frequency
+For **small angles** $\theta \ll 1$, we approximate $\sin(\theta) \approx \theta$, reducing the equation to:
 
-Small-Angle Approximation
-For small angles (
-sin
-⁡
-𝜃
-≈
-𝜃
-sinθ≈θ), the equation simplifies to:
+$$
+\frac{d^2\theta}{dt^2} + \beta \frac{d\theta}{dt} + \omega_0^2 \theta = A \cos(\omega t)
+$$
 
-𝑑
-2
-𝜃
-𝑑
-𝑡
-2
-+
-𝛽
-𝑑
-𝜃
-𝑑
-𝑡
-+
-𝜔
-0
-2
-𝜃
-=
-𝐴
-cos
-⁡
-(
-𝜔
-𝑡
-)
-dt 
-2
- 
-d 
-2
- θ
-​
- +β 
-dt
-dθ
-​
- +ω 
-0
-2
-​
- θ=Acos(ωt)
-This is a driven damped harmonic oscillator, and it has a steady-state solution:
+This is a second-order linear inhomogeneous differential equation, with resonance occurring when:
 
-𝜃
-(
-𝑡
-)
-=
-𝜃
-steady
-(
-𝑡
-)
-=
-𝐵
-cos
-⁡
-(
-𝜔
-𝑡
-−
-𝛿
-)
-θ(t)=θ 
-steady
-​
- (t)=Bcos(ωt−δ)
-Where:
+$$
+\omega \approx \omega_0 = \sqrt{\frac{g}{l}}
+$$
 
-𝐵
-=
-𝐴
-(
-𝜔
-0
-2
-−
-𝜔
-2
-)
-2
-+
-𝛽
-2
-𝜔
-2
-B= 
-(ω 
-0
-2
-​
- −ω 
-2
- ) 
-2
- +β 
-2
- ω 
-2
- 
-​
- 
-A
-​
- 
+---
 
-𝛿
-=
-tan
-⁡
-−
-1
-(
-𝛽
-𝜔
-𝜔
-0
-2
-−
-𝜔
-2
-)
-δ=tan 
-−1
- ( 
-ω 
-0
-2
-​
- −ω 
-2
- 
-βω
-​
- )
+### Python Code:
 
-Maximum amplitude occurs at resonance:
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
 
-𝜔
-res
-=
-𝜔
-0
-2
-−
-𝛽
-2
-2
-ω 
-res
-​
- = 
-ω 
-0
-2
-​
- − 
-2
-β 
-2
- 
-​
- 
-​
- 
-2. 🔬 Dynamics Analysis
-Influence of Parameters:
-Damping 
-𝛽
-β: suppresses motion, reduces peak amplitude.
+# Parameters
+g = 9.81
+l = 1.0
+omega0 = np.sqrt(g / l)
+beta = 0.5
+A = 1.2
+omega = omega0
 
-Driving Amplitude 
-𝐴
-A: higher values can push system into chaotic regimes.
+# Equation for small-angle approximation
+def pendulum(t, y):
+    theta, v = y
+    dtheta_dt = v
+    dv_dt = -beta * v - omega0**2 * theta + A * np.cos(omega * t)
+    return [dtheta_dt, dv_dt]
 
-Driving Frequency 
-𝜔
-ω: determines whether motion is synchronized or chaotic.
+# Solve
+t_span = (0, 20)
+t_eval = np.linspace(*t_span, 1000)
+y0 = [0.1, 0]
+sol = solve_ivp(pendulum, t_span, y0, t_eval=t_eval)
 
-Types of Behavior:
-Periodic: motion repeats over time.
+plt.plot(sol.t, sol.y[0])
+plt.xlabel('Time (s)')
+plt.ylabel('Angle (rad)')
+plt.title('Small-Angle Forced Damped Pendulum')
+plt.grid(True)
+plt.show()
+```
+![alt text](image-10.png)
+---
 
-Quasiperiodic: complex oscillation without repetition.
+### Explanation:
 
-Chaotic: sensitive dependence on initial conditions; no clear pattern.
+We modeled a forced damped pendulum using the small-angle approximation. Resonance occurs when driving frequency $\omega$ matches the natural frequency $\omega_0$. The code shows the resulting oscillations over time.
 
-3. 🌍 Practical Applications
-Energy Harvesting: devices convert oscillations into electrical energy.
+---
 
-Engineering Structures: bridges, buildings under periodic forces.
+## Task 2: Analysis of Dynamics
 
-RLC Circuits: analogous equations describe voltage/current.
+### Mathematical Formulation:
 
-Biomechanics: modeling leg movement in walking (e.g., gait analysis).
+The full nonlinear equation:
 
-4. 💻 Implementation (Python)
-Here’s a Python script using scipy.integrate.solve_ivp to simulate and visualize behavior:
-![alt text](image-1.png)
-![alt text](image-2.png)
-5. 🧩 Advanced Visualizations
-Phase Portrait: reveals oscillatory and chaotic states.
+$$
+\frac{d^2\theta}{dt^2} + \beta \frac{d\theta}{dt} + \omega_0^2 \sin(\theta) = A \cos(\omega t)
+$$
 
-Poincaré Section: reveals regular vs chaotic motion.
+Different behaviors emerge based on:
 
-Bifurcation Diagram (optional): plot 
-𝜃
-θ vs driving force/frequency to study transitions.
+* $\beta$: damping
+* $A$: forcing amplitude
+* $\omega$: driving frequency
 
-6. ⚠️ Limitations and Extensions
-Limitation	Suggested Extension
-Ignores nonlinear damping	Add 
-−
-𝛼
-𝜔
-2
-−αω 
-2
-  term
-Periodic force only	Introduce random or pulsed forcing
-Single pendulum	Study coupled pendulums or pendulum on cart
-No energy input/output tracking	Track system energy: 
-𝐸
-(
-𝑡
-)
-E(t)
+This system can transition to **chaos** when $A$ and $\omega$ are large enough.
 
-✅ Deliverables Summary
-Component	Description
-Theoretical Derivations	Small-angle solutions + resonance
-Code Implementation	RK45 simulation of pendulum
-Graphical Output	θ(t), phase plot, Poincaré section
-Dynamic Analysis	How parameters affect motion
-Limitations & Extensions	Chaos, real-world constraints
+---
+
+### Python Code:
+
+```python
+def nonlinear_pendulum(t, y):
+    theta, v = y
+    return [v, -beta * v - omega0**2 * np.sin(theta) + A * np.cos(omega * t)]
+
+sol2 = solve_ivp(nonlinear_pendulum, t_span, [0.1, 0], t_eval=t_eval)
+
+plt.plot(sol2.t, sol2.y[0])
+plt.xlabel('Time (s)')
+plt.ylabel('Angle (rad)')
+plt.title('Nonlinear Forced Damped Pendulum')
+plt.grid(True)
+plt.show()
+```
+![alt text](image-11.png)
+---
+
+### Explanation:
+
+Here we simulate the full nonlinear system. The motion can be quasiperiodic or chaotic depending on parameters. Nonlinearity introduces complex oscillations that don't appear in the small-angle model.
+
+---
+
+## Task 3: Practical Applications
+
+### Mathematical Formulation:
+
+This model describes many real-world systems:
+
+* **Energy harvesters**: convert periodic mechanical motion into electricity.
+* **Suspension bridges**: under wind-induced oscillations.
+* **Driven RLC circuits**: analogous second-order dynamics.
+
+The dynamics help design systems that avoid or exploit resonance.
+
+---
+
+### Python Code:
+
+```python
+def plot_multiple(beta_vals):
+    plt.figure(figsize=(8,5))
+    for b in beta_vals:
+        def dyn(t, y): return [y[1], -b * y[1] - omega0**2 * np.sin(y[0]) + A * np.cos(omega * t)]
+        sol = solve_ivp(dyn, t_span, [0.1, 0], t_eval=t_eval)
+        plt.plot(sol.t, sol.y[0], label=f'β = {b}')
+    plt.xlabel('Time (s)')
+    plt.ylabel('Angle (rad)')
+    plt.title('Damping Effect on Pendulum Motion')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+plot_multiple([0.2, 0.5, 1.0])
+```
+![alt text](image-12.png)
+---
+
+### Explanation:
+
+Different damping values are simulated to show how energy dissipation impacts oscillations. Real systems like bridges must be designed to avoid excessive oscillations caused by resonance.
+
+---
+
+## Task 4: Implementation
+
+### Mathematical Formulation:
+
+We simulate the nonlinear equation and create:
+
+* **Phase diagrams**: $\theta$ vs $\dot{\theta}$
+* **Poincaré sections**: sample state at regular driving periods
+* These reveal transitions from periodic to chaotic motion.
+
+---
+
+### Python Code:
+
+```python
+theta_vals = []
+v_vals = []
+times = []
+
+def poincare(t, y):
+    theta, v = y
+    return [v, -beta * v - omega0**2 * np.sin(theta) + A * np.cos(omega * t)]
+
+sol3 = solve_ivp(poincare, [0, 100], [0.1, 0], t_eval=np.linspace(0, 100, 5000))
+
+for i, t in enumerate(sol3.t):
+    if abs((omega * t) % (2*np.pi)) < 0.05:
+        theta_vals.append(sol3.y[0][i])
+        v_vals.append(sol3.y[1][i])
+        times.append(t)
+
+plt.scatter(theta_vals, v_vals, s=5, c=times, cmap='viridis')
+plt.xlabel('θ (rad)')
+plt.ylabel('ω (rad/s)')
+plt.title('Poincaré Section of Forced Damped Pendulum')
+plt.colorbar(label='Time')
+plt.grid(True)
+plt.show()
+```
+![alt text](image-14.png)
+---
+
+### Explanation:
+
+This Poincaré section reveals the structure of the pendulum’s state sampled at regular driving intervals. If the system is chaotic, the points fill a region. If periodic, they form loops or discrete points.
+
+---
+
