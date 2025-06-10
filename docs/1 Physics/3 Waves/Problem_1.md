@@ -1,120 +1,74 @@
-**Problem 1: Equivalent Resistance Using Graph Theory**
+**Problem 1: Interference Patterns on a Water Surface**
 
 ---
 
-### 🔹 Mathematical and Algorithmic Foundation
+### 🔹 Mathematical Model
 
-Electrical circuits can be modeled as **weighted undirected graphs**, where:
+The wave from a single point source is given by:
 
-* **Nodes** = circuit junctions
-* **Edges** = resistors (edge weights = resistance values)
+$$
+\eta(x, y, t) = A \sin(kr - \omega t + \phi)
+$$
 
-**Goal**: Find the **equivalent resistance** between two specified nodes (e.g., input and output terminals) by systematically reducing the graph.
+Where:
 
----
+* $A$: Amplitude
+* $r = \sqrt{(x - x_0)^2 + (y - y_0)^2}$: Distance from the source
+* $k = \frac{2\pi}{\lambda}$: Wave number
+* $\omega = 2\pi f$: Angular frequency
+* $\phi$: Initial phase
 
-## ✅ **Option 2: Advanced Task – Full Implementation**
+The total displacement from $N$ sources becomes:
 
----
-
-### 🧠 Step-by-Step Strategy
-
-#### 1. **Graph Representation**
-
-* Model the circuit as an undirected weighted graph using `networkx`.
-* Each resistor is an edge with weight equal to its resistance.
-
-#### 2. **Reduction Rules**
-
-* **Series:** If two nodes are connected by a single path (degree 2), collapse the series:
-
-  $$
-  R_{\text{eq}} = R_1 + R_2
-  $$
-* **Parallel:** For nodes connected by multiple paths (same start and end), reduce using:
-
-  $$
-  \frac{1}{R_{\text{eq}}} = \sum \frac{1}{R_i}
-  $$
-
-#### 3. **Traversal and Simplification**
-
-* Use DFS or BFS to identify reduction opportunities.
-* Repeatedly apply simplifications until only one equivalent edge remains between the start and end nodes.
+$$
+\eta_{\text{total}}(x, y, t) = \sum_{i=1}^{N} A \sin(k r_i - \omega t + \phi)
+$$
 
 ---
 
-### 🧪 Example Circuit Diagrams and Expected Behavior
-
-| Example | Type     | Description                                                                                  |
-| ------- | -------- | -------------------------------------------------------------------------------------------- |
-| 1       | Series   | Resistors 2Ω and 3Ω between A and B → Result: 5Ω                                             |
-| 2       | Parallel | 2Ω and 3Ω in parallel between A and B → Result: $\frac{1}{\frac{1}{2} + \frac{1}{3}} = 1.2Ω$ |
-| 3       | Mixed    | 2Ω & 2Ω in parallel, in series with 4Ω → Result: 5Ω                                          |
-
----
-
-### 🐍 Python Implementation
+### 🔹 Python Code
 
 ```python
-import networkx as nx
+import numpy as np
+import matplotlib.pyplot as plt
 
-def combine_parallel_edges(G):
-    for u, v in list(G.edges()):
-        edges = list(G.get_edge_data(u, v).values())
-        if len(edges) > 1:
-            total_inv = sum(1 / edge['resistance'] for edge in edges)
-            R_eq = 1 / total_inv
-            G.remove_edges_from([(u, v)] * len(edges))
-            G.add_edge(u, v, resistance=R_eq)
+# Simulation Parameters
+A = 1.0
+wavelength = 1.0
+frequency = 1.0
+k = 2 * np.pi / wavelength
+omega = 2 * np.pi * frequency
+phi = 0
+t = 0
 
-def simplify_series_nodes(G):
-    changed = True
-    while changed:
-        changed = False
-        for node in list(G.nodes()):
-            if G.degree[node] == 2 and node not in ('A', 'B'):  # Skip terminals
-                neighbors = list(G.neighbors(node))
-                r1 = G[node][neighbors[0]]['resistance']
-                r2 = G[node][neighbors[1]]['resistance']
-                R_eq = r1 + r2
-                G.add_edge(neighbors[0], neighbors[1], resistance=R_eq)
-                G.remove_node(node)
-                changed = True
-                break
+# Grid setup
+x = np.linspace(-5, 5, 500)
+y = np.linspace(-5, 5, 500)
+X, Y = np.meshgrid(x, y)
 
-def calculate_equivalent_resistance(G, source, target):
-    combine_parallel_edges(G)
-    simplify_series_nodes(G)
-    return G[source][target]['resistance'] if G.has_edge(source, target) else None
+# Regular Polygon: Square (4 vertices)
+n_sources = 4
+radius = 2.0
+angles = np.linspace(0, 2*np.pi, n_sources, endpoint=False)
+source_positions = [(radius * np.cos(a), radius * np.sin(a)) for a in angles]
 
-# Example: Mixed circuit (Parallel + Series)
-G = nx.MultiGraph()
-G.add_edge('A', 'C', resistance=2)
-G.add_edge('A', 'C', resistance=2)
-G.add_edge('C', 'B', resistance=4)
+# Interference pattern
+Z = np.zeros_like(X)
+for x0, y0 in source_positions:
+    r = np.sqrt((X - x0)**2 + (Y - y0)**2)
+    Z += A * np.sin(k * r - omega * t + phi)
 
-R_eq = calculate_equivalent_resistance(G, 'A', 'B')
-print(f"Equivalent Resistance: {R_eq} Ω")
+# Plotting
+plt.figure(figsize=(8, 6))
+plt.contourf(X, Y, Z, levels=100, cmap='RdBu')
+plt.colorbar(label='Displacement')
+plt.title('Interference Pattern from 4 Point Sources (Square Configuration)')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.axis('equal')
+plt.tight_layout()
+plt.show()
 ```
-![alt text](image-2.png)
----![alt text](image-3.png)
-
-### 📈 Analysis of Algorithm Efficiency
-
-* For sparse graphs (typical in circuits), performance is efficient:
-
-  * **Series detection**: $O(N)$
-  * **Parallel merging**: $O(E)$
-* Can be improved using:
-
-  * Union-find data structures
-  * Kirchhoff’s Laws and matrix reduction (for advanced cases)
-
+![alt text](image-4.png)
 ---
 
-### 🧩 Conclusion
-
-This approach effectively models and reduces circuits using graph-based methods, automating what would otherwise be a manual and error-prone process for large circuits.
-
----
