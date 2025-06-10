@@ -206,6 +206,8 @@
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.integrate import solve_ivp
+![alt text](image-5.png)
+![alt text](image-6.png)
 
 class ChargedParticle:
     def __init__(self, q=1.6e-19, m=9.11e-31, v0=np.array([1e6, 0, 0])):
@@ -274,6 +276,8 @@ print(f"Larmor radius: {r_L:.2e} m")
 particle.plot_trajectory_3d(pos, "Particle Trajectory in Uniform B Field (3D)")
 particle.plot_trajectory_2d(pos[:,:2], "Particle Trajectory in Uniform B Field (XY Plane)")
 </code></pre>
+<p><img alt="alt text" src="../image-7.png"/>
+<img alt="alt text" src="../image-8.png"/></p>
 <h2 id="case-2-combined-electric-and-magnetic-fields-e-b">Case 2: Combined Electric and Magnetic Fields (E ∥ B)</h2>
 <pre><code class="language-python"># Case 2: Parallel E and B fields
 B = np.array([0, 0, 1])  # 1 Tesla in z-direction
@@ -284,6 +288,8 @@ pos, vel, t = particle.simulate_trajectory(E, B, t_span=(0, 5e-8))
 particle.plot_trajectory_3d(pos, "Particle Trajectory in Parallel E and B Fields (3D)")
 particle.plot_trajectory_2d(pos[:,:2], "Particle Trajectory in Parallel E and B Fields (XY Plane)")
 </code></pre>
+<p><img alt="alt text" src="../image-9.png"/>
+<img alt="alt text" src="../image-10.png"/></p>
 <h2 id="case-3-crossed-electric-and-magnetic-fields-e-b">Case 3: Crossed Electric and Magnetic Fields (E ⊥ B)</h2>
 <pre><code class="language-python"># Case 3: Crossed E and B fields (E ⊥ B)
 B = np.array([0, 0, 1])  # 1 Tesla in z-direction
@@ -298,6 +304,8 @@ print(f"E×B drift velocity: {v_drift} m/s")
 particle.plot_trajectory_3d(pos, "Particle Trajectory in Crossed E and B Fields (3D)")
 particle.plot_trajectory_2d(pos[:,:2], "Particle Trajectory in Crossed E and B Fields (XY Plane)")
 </code></pre>
+<p><img alt="alt text" src="../image-11.png"/>
+<img alt="alt text" src="../image-12.png"/></p>
 <h2 id="discussion-of-results">Discussion of Results</h2>
 <h3 id="1-uniform-magnetic-field">1. Uniform Magnetic Field</h3>
 <ul>
