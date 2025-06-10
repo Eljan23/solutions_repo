@@ -84,6 +84,18 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#1-problem-description">1. Problem Description</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#2-outline-of-the-approach">2. Outline of the Approach</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#3-example-python-notebook-implementation">3. Example Python Notebook Implementation</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_1"></a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#4-what-you-will-observe">4. What you will observe:</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#5-discussion-points">5. Discussion Points:</a>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Problem_2/">Problem 2</a>
@@ -171,56 +183,114 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-1">Problem 1</h1>
-<p>Exploring the Central Limit Theorem Through Simulations
-1. Overview
-The Central Limit Theorem (CLT) states that for large enough sample sizes, the distribution of the sample mean approaches a normal distribution, regardless of the population’s original distribution.</p>
+<hr/>
+<h1 id="central-limit-theorem-simulation">Central Limit Theorem Simulation</h1>
+<h2 id="1-problem-description">1. Problem Description</h2>
+<p>Explore how the sampling distribution of the sample mean converges to a normal distribution for different population distributions and sample sizes.</p>
+<hr/>
+<h2 id="2-outline-of-the-approach">2. Outline of the Approach</h2>
 <ol>
-<li>Simulation Plan
-Population Distributions:</li>
+<li>
+<p>Define several population distributions:</p>
+</li>
+<li>
+<p>Uniform</p>
+</li>
+<li>Exponential</li>
+<li>
+<p>Binomial</p>
+</li>
+<li>
+<p>For each distribution:</p>
+</li>
+<li>
+<p>Generate a large population dataset.</p>
+</li>
+<li>Draw repeated samples of sizes 5, 10, 30, 50.</li>
+<li>Compute sample means for each sample.</li>
+<li>
+<p>Plot histograms of the sampling distributions.</p>
+</li>
+<li>
+<p>Analyze:</p>
+</li>
+<li>
+<p>How shape affects convergence.</p>
+</li>
+<li>Effect of variance on spread.</li>
 </ol>
-<p>Uniform(0, 1)</p>
-<p>Exponential(λ=1)</p>
-<p>Binomial(n=10, p=0.5)</p>
-<p>Sampling:</p>
-<p>Sample sizes: 5, 10, 30, 50</p>
-<p>For each sample size, take many (e.g., 1000) samples and compute their means.</p>
-<p>Visualization:</p>
-<p>Plot histograms of sample means for each sample size and distribution.</p>
-<p>Overlay normal distribution for comparison.</p>
-<ol>
-<li>Python Code Example
-<img alt="alt text" src="../image.png"/>
-<img alt="alt text" src="../image-1.png"/>
-<img alt="alt text" src="../image-2.png"/></li>
-<li>Discussion Points
-For small sample sizes (e.g., 5), the distribution of sample means resembles the shape of the original population.</li>
-</ol>
-<p>As sample size increases (≥30), the sample mean distribution becomes increasingly Gaussian, confirming the CLT.</p>
-<p>The spread (variance) of the sample means decreases with increasing sample size (
-𝜎
-𝑥
-ˉ
-=
-𝜎
-/
-𝑛
-σ 
-x
-ˉ</p>
-<p>​
- =σ/ 
-n
-​
- ).</p>
-<p>The binomial case (discrete distribution) also approaches normality for large sample sizes.</p>
-<p>This explains why normal assumptions are widely used in inferential statistics, even for non-normal data.</p>
-<ol>
-<li>Practical Applications
-Estimating population parameters: Enables confidence intervals around means.</li>
-</ol>
-<p>Quality control: Monitoring sample means ensures process stability.</p>
-<p>Finance: Assumptions on returns often rely on CLT for risk models.</p>
+<hr/>
+<h2 id="3-example-python-notebook-implementation">3. Example Python Notebook Implementation</h2>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.set(style="whitegrid")
+
+# 1. Define population distributions
+population_size = 100000
+
+populations = {
+    'Uniform(0, 1)': np.random.uniform(0, 1, population_size),
+    'Exponential(λ=1)': np.random.exponential(scale=1, size=population_size),
+    'Binomial(n=10, p=0.5)': np.random.binomial(n=10, p=0.5, size=population_size)
+}
+
+# Sample sizes to test
+sample_sizes = [5, 10, 30, 50]
+n_samples = 1000  # Number of repeated samples
+
+# Function to perform sampling and compute sample means
+def sample_means(population, sample_size, n_samples):
+    means = []
+    for _ in range(n_samples):
+        sample = np.random.choice(population, sample_size, replace=False)
+        means.append(np.mean(sample))
+    return np.array(means)
+
+# Plotting
+fig, axes = plt.subplots(len(populations), len(sample_sizes), figsize=(20, 12))
+fig.suptitle("Sampling Distribution of Sample Means for Different Populations and Sample Sizes", fontsize=16)
+
+for row_idx, (pop_name, population) in enumerate(populations.items()):
+    pop_var = np.var(population)
+    for col_idx, sample_size in enumerate(sample_sizes):
+        means = sample_means(population, sample_size, n_samples)
+        ax = axes[row_idx, col_idx]
+
+        sns.histplot(means, bins=30, kde=True, ax=ax, color='skyblue')
+        ax.set_title(f'{pop_name}\nSample Size={sample_size}\nPopulation Var={pop_var:.2f}')
+        ax.set_xlabel('Sample Mean')
+        ax.set_ylabel('Frequency')
+
+        # Overlay normal distribution with same mean and variance of sample means
+        sample_mean = np.mean(means)
+        sample_std = np.std(means)
+        x = np.linspace(min(means), max(means), 100)
+        ax.plot(x, 
+                n_samples * (1/(sample_std * np.sqrt(2 * np.pi))) * np.exp(-(x - sample_mean)**2 / (2 * sample_std**2)), 
+                color='red', linestyle='--', label='Normal Approximation')
+        ax.legend()
+
+plt.tight_layout(rect=[0, 0, 1, 0.95])
+plt.show()
+</code></pre>
+<h2 id="_1"><img alt="alt text" src="../image-5.png"/></h2>
+<h2 id="4-what-you-will-observe">4. What you will observe:</h2>
+<ul>
+<li>For <strong>small sample sizes (5, 10)</strong>, sample means from skewed distributions (like exponential) look non-normal.</li>
+<li>As <strong>sample size increases (30, 50)</strong>, sample means approach a bell-shaped curve for all distributions.</li>
+<li>The spread (variance) of the sample means decreases as sample size increases, following the theoretical variance <span class="arithmatex">\(\sigma^2 / n\)</span>.</li>
+</ul>
+<hr/>
+<h2 id="5-discussion-points">5. Discussion Points:</h2>
+<ul>
+<li>The Central Limit Theorem works regardless of the original population distribution shape.</li>
+<li>Variance of sample means is smaller than population variance by a factor of sample size.</li>
+<li>This underpins confidence interval estimation, hypothesis testing, and quality control in practice.</li>
+<li>Understanding CLT helps justify normality assumptions in many real-world models even when data is not normal.</li>
+</ul>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
