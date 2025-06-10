@@ -1,55 +1,122 @@
-# Problem 1
-⚙️ Task: Equivalent Resistance Using Graph Theory
-🧠 Key Ideas
-We model a resistor network as a weighted undirected graph, where:
+**Problem 1: Equivalent Resistance Using Graph Theory**
 
-Nodes = junctions
+---
 
-Edges = resistors, with edge weights = resistance in ohms
+### 🔹 Mathematical and Algorithmic Foundation
 
-We iteratively:
+Electrical circuits can be modeled as **weighted undirected graphs**, where:
 
-Merge series resistors (1 path between two nodes)
+* **Nodes** = circuit junctions
+* **Edges** = resistors (edge weights = resistance values)
 
-Merge parallel resistors (multiple edges between the same node pair)
+**Goal**: Find the **equivalent resistance** between two specified nodes (e.g., input and output terminals) by systematically reducing the graph.
 
-✅ Python Implementation
-![alt text](image.png)
-![alt text](image-1.png)
-🧪 Example Tests
-1. Simple Series Circuit
-![alt text](image-2.png)
-Series (2Ω + 3Ω): 5 Ω
-![alt text](image-3.png)
-Parallel (2Ω || 3Ω): 3 Ω
-2. Simple Parallel Circuit
-![alt text](image-4.png)
-Parallel (4Ω || 6Ω): 2.4000000000000004 Ω
-📈 Efficiency & Improvements
-Time Complexity:
-Each simplification step takes 
-𝑂
-(
-𝐸
-)
-O(E)
+---
 
-Loop converges quickly (since nodes/edges reduce each round)
+## ✅ **Option 2: Advanced Task – Full Implementation**
 
-Improvements:
-Add support for multi-source inputs (more general network)
+---
 
-Optimize by caching known series/parallel combinations
+### 🧠 Step-by-Step Strategy
 
-Add cycle detection for Wheatstone bridge cases (requires Y-Δ transform)
+#### 1. **Graph Representation**
 
-✅ Deliverables Summary
-Requirement	Delivered
-Pseudocode / Algorithm	✔️
-Python Code (Full Implementation)	✔️
-Handles Arbitrary Topologies	✔️
-Tested on 3 Examples	✔️
-Performance Discussion	✔️
+* Model the circuit as an undirected weighted graph using `networkx`.
+* Each resistor is an edge with weight equal to its resistance.
 
+#### 2. **Reduction Rules**
 
+* **Series:** If two nodes are connected by a single path (degree 2), collapse the series:
+
+  $$
+  R_{\text{eq}} = R_1 + R_2
+  $$
+* **Parallel:** For nodes connected by multiple paths (same start and end), reduce using:
+
+  $$
+  \frac{1}{R_{\text{eq}}} = \sum \frac{1}{R_i}
+  $$
+
+#### 3. **Traversal and Simplification**
+
+* Use DFS or BFS to identify reduction opportunities.
+* Repeatedly apply simplifications until only one equivalent edge remains between the start and end nodes.
+
+---
+
+### 🧪 Example Circuit Diagrams and Expected Behavior
+
+| Example | Type     | Description                                                                                  |
+| ------- | -------- | -------------------------------------------------------------------------------------------- |
+| 1       | Series   | Resistors 2Ω and 3Ω between A and B → Result: 5Ω                                             |
+| 2       | Parallel | 2Ω and 3Ω in parallel between A and B → Result: $\frac{1}{\frac{1}{2} + \frac{1}{3}} = 1.2Ω$ |
+| 3       | Mixed    | 2Ω & 2Ω in parallel, in series with 4Ω → Result: 5Ω                                          |
+
+---
+
+### 🐍 Python Implementation
+
+```python
+import networkx as nx
+
+def combine_parallel_edges(G):
+    for u, v in list(G.edges()):
+        edges = list(G.get_edge_data(u, v).values())
+        if len(edges) > 1:
+            total_inv = sum(1 / edge['resistance'] for edge in edges)
+            R_eq = 1 / total_inv
+            G.remove_edges_from([(u, v)] * len(edges))
+            G.add_edge(u, v, resistance=R_eq)
+
+def simplify_series_nodes(G):
+    changed = True
+    while changed:
+        changed = False
+        for node in list(G.nodes()):
+            if G.degree[node] == 2 and node not in ('A', 'B'):  # Skip terminals
+                neighbors = list(G.neighbors(node))
+                r1 = G[node][neighbors[0]]['resistance']
+                r2 = G[node][neighbors[1]]['resistance']
+                R_eq = r1 + r2
+                G.add_edge(neighbors[0], neighbors[1], resistance=R_eq)
+                G.remove_node(node)
+                changed = True
+                break
+
+def calculate_equivalent_resistance(G, source, target):
+    combine_parallel_edges(G)
+    simplify_series_nodes(G)
+    return G[source][target]['resistance'] if G.has_edge(source, target) else None
+
+# Example: Mixed circuit (Parallel + Series)
+G = nx.MultiGraph()
+G.add_edge('A', 'C', resistance=2)
+G.add_edge('A', 'C', resistance=2)
+G.add_edge('C', 'B', resistance=4)
+
+R_eq = calculate_equivalent_resistance(G, 'A', 'B')
+print(f"Equivalent Resistance: {R_eq} Ω")
+```
+![alt text](image-5.png)
+![alt text](image-6.png)
+---
+
+### 📈 Analysis of Algorithm Efficiency
+
+* For sparse graphs (typical in circuits), performance is efficient:
+
+  * **Series detection**: $O(N)$
+  * **Parallel merging**: $O(E)$
+* Can be improved using:
+
+  * Union-find data structures
+  * Kirchhoff’s Laws and matrix reduction (for advanced cases)
+
+---
+
+### 🧩 Conclusion
+
+This approach effectively models and reduces circuits using graph-based methods, automating what would otherwise be a manual and error-prone process for large circuits.
+
+---
 
