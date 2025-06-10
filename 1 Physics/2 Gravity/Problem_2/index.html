@@ -58,6 +58,10 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 2</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#mathematical-formulation">Mathematical Formulation:</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python-code">Python Code:</a>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Problem_3/">Problem 3</a>
@@ -171,299 +175,139 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-2">Problem 2</h1>
-<p>🚀 Escape and Cosmic Velocities: Foundations of Orbital Mechanics
-1. 🌍 Definitions: The Three Cosmic Velocities
-Cosmic Velocity Symbol  Definition  Use Case
-1st 
-𝑣
-1
-v 
-1
-​
-    Minimum horizontal velocity needed for a circular orbit near the surface.   Satellites, ISS, LEO.
-2nd 
-𝑣
-2
-v 
-2
-​
-    Escape velocity: minimum velocity to leave a planet’s gravitational field without propulsion.   Interplanetary missions.
-3rd 
-𝑣
-3
-v 
-3
-​
-    Minimum velocity to escape the gravitational field of the Sun, starting from Earth’s orbit. Interstellar probes.</p>
-<ol>
-<li>🔍 Mathematical Derivations
-First Cosmic Velocity (Orbital Velocity)
-Derived by equating centripetal force with gravity:</li>
-</ol>
-<p>𝐺
-𝑀
-𝑚
-𝑟
-2
-=
-𝑚
-𝑣
-1
-2
-𝑟
-⇒
-𝑣
-1
-=
-𝐺
-𝑀
-𝑟
-r 
-2</p>
-<p>GMm
-​
- = 
-r
-mv 
-1
-2
-​</p>
-<p>​
- ⇒v 
-1
-​
- = 
-r
-GM
-​</p>
-<p>​</p>
-<p>Second Cosmic Velocity (Escape Velocity)
-Derived using energy conservation:</p>
-<p>1
-2
-𝑚
-𝑣
-2
-2
-=
-𝐺
-𝑀
-𝑚
-𝑟
-⇒
-𝑣
-2
-=
-2
-𝐺
-𝑀
-𝑟
-=
-2
-𝑣
-1
-2
-1
-​
- mv 
-2
-2
-​
- = 
-r
-GMm
-​
- ⇒v 
-2
-​
- = 
-r
-2GM
-​</p>
-<p>​
- = 
-2
-​
- v 
-1
-​</p>
-<p>Third Cosmic Velocity (Solar Escape from Earth Orbit)
-Escape velocity from the Sun, starting from a circular Earth orbit:</p>
-<p>𝑣
-3
-=
-𝑣
-𝑒
-𝑠
-𝑐
-,
-Sun
-2
-+
-𝑣
-Earth orbit
-2
-≈
-42.1
- km/s
-v 
-3
-​
- = 
-v 
-esc,Sun
-2
-​
- +v 
-Earth orbit
-2
-​</p>
-<p>​
- ≈42.1 km/s
-3. 🌎 Compute for Earth, Mars, and Jupiter
-Parameters:
-Body    Mass (kg)   Radius (m)
-Earth <br/>
-5.97
-×
-10
-24
-5.97×10 
-24</p>
-<p>6.371
-×
-10
-6
-6.371×10 
-6</p>
-<p>Mars  <br/>
-6.39
-×
-10
-23
-6.39×10 
-23</p>
-<p>3.389
-×
-10
-6
-3.389×10 
-6</p>
-<p>Jupiter 
-1.90
-×
-10
-27
-1.90×10 
-27</p>
-<p>6.9911
-×
-10
-7
-6.9911×10 
-7</p>
-<p>Python Script:
-<img alt="alt text" src="../image-3.png"/>
-4. 🚀 Real-World Applications
-Satellite Orbits:
-LEO: Requires 
-𝑣
-1
-≈
-7.9
- km/s
-v 
-1
-​
- ≈7.9 km/s (Earth)</p>
-<p>GPS satellites use 
-𝑣
-1
-v 
-1
-​
-  for Medium Earth Orbits</p>
-<p>Interplanetary Travel:
-Rockets reach 
-𝑣
-2
-v 
-2
-​
-  to escape Earth (about 11.2 km/s)</p>
-<p>To reach Mars, a Hohmann transfer orbit is used</p>
-<p>Interstellar Missions:
-Probes like Voyager 1 achieved 
-𝑣
-3
-≈
-17
-v 
-3
-​
- ≈17 km/s using gravity assists</p>
-<ol>
-<li>🌠 Graphical Representations
-Bar Chart: Compares 
-𝑣
-1
-v 
-1
-​
-  and 
-𝑣
-2
-v 
-2
-​
-  for different planets</li>
-</ol>
-<p>Function Plot (Optional):</p>
-<p>𝑣
-1
-(
-𝑟
-)
-,
- 
-𝑣
-2
-(
-𝑟
-)
- vs. 
-𝑟
-v 
-1
-​
- (r), v 
-2
-​
- (r) vs. r
-6. 📌 Summary of Deliverables
-Component   Description
-Derivations Full mathematical explanation of 
-𝑣
-1
-v 
-1
-​
- , 
-𝑣
-2
-v 
-2
-​
- , and 
-𝑣
-3
-v 
-3
-​</p>
-<p>Simulations Python script with plots and numeric results
-Applications    Launching satellites, interplanetary escape, space missions
-Visuals Velocity comparison across planets</p>
+<hr/>
+<h2 id="task-1-theoretical-foundation">Task 1: Theoretical Foundation</h2>
+<h3 id="mathematical-formulation">Mathematical Formulation:</h3>
+<ul>
+<li><strong>First Cosmic Velocity</strong> <span class="arithmatex">\(v_1\)</span>: orbital velocity near surface (circular orbit)</li>
+</ul>
+<p>$$
+  v_1 = \sqrt{\frac{G M}{R}}
+  $$</p>
+<ul>
+<li><strong>Second Cosmic Velocity</strong> <span class="arithmatex">\(v_2\)</span>: escape velocity (leave gravity without return)</li>
+</ul>
+<p>$$
+  v_2 = \sqrt{\frac{2 G M}{R}}
+  $$</p>
+<ul>
+<li><strong>Third Cosmic Velocity</strong> <span class="arithmatex">\(v_3\)</span>: velocity to escape from solar system starting from Earth’s orbit</li>
+</ul>
+<p>$$
+  v_3 = \sqrt{v_{esc,\odot}^2 + v_{orb,\oplus}^2}
+  $$</p>
+<hr/>
+<h3 id="python-code">Python Code:</h3>
+<pre><code class="language-python">import numpy as np
+
+# Gravitational constant
+G = 6.67430e-11  
+
+# Celestial bodies: mass (kg) and radius (m)
+bodies = {
+    "Earth":   {"M": 5.972e24, "R": 6.371e6},
+    "Mars":    {"M": 6.417e23, "R": 3.389e6},
+    "Jupiter": {"M": 1.898e27, "R": 6.9911e7}
+}
+
+for body, data in bodies.items():
+    M, R = data["M"], data["R"]
+    v1 = np.sqrt(G * M / R)
+    v2 = np.sqrt(2 * G * M / R)
+    print(f"{body}:\n  v1 (orbital): {v1/1000:.2f} km/s\n  v2 (escape):  {v2/1000:.2f} km/s\n")
+</code></pre>
+<h2 id="_1"><img alt="alt text" src="../image-9.png"/></h2>
+<h3 id="explanation">Explanation:</h3>
+<p>We calculated the <strong>first and second cosmic velocities</strong> using Newtonian gravity. These correspond to orbital speed at surface and escape velocity. The results vary significantly by planetary mass and radius.</p>
+<hr/>
+<h2 id="task-2-analysis-of-parameters">Task 2: Analysis of Parameters</h2>
+<h3 id="mathematical-formulation_1">Mathematical Formulation:</h3>
+<p>Both <span class="arithmatex">\(v_1\)</span> and <span class="arithmatex">\(v_2\)</span> depend on:</p>
+<ul>
+<li>Gravitational constant <span class="arithmatex">\(G\)</span></li>
+<li>Mass of the body <span class="arithmatex">\(M\)</span></li>
+<li>Radius from center <span class="arithmatex">\(R\)</span></li>
+</ul>
+<div class="arithmatex">\[
+v_2 = \sqrt{2} \cdot v_1
+\]</div>
+<p>Larger mass and smaller radius increase these velocities. Gas giants like Jupiter require much higher speeds to escape due to massive gravity.</p>
+<hr/>
+<h3 id="python-code_1">Python Code:</h3>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+
+# Generate masses and radii
+radii = np.linspace(1e6, 8e7, 1000)
+mass = 5.972e24  # Fix Earth mass
+v2_range = np.sqrt(2 * G * mass / radii)
+
+plt.plot(radii / 1e6, v2_range / 1000)
+plt.xlabel("Radius (x10⁶ m)")
+plt.ylabel("Escape Velocity (km/s)")
+plt.title("Escape Velocity vs Radius for Earth Mass")
+plt.grid(True)
+plt.show()
+</code></pre>
+<h2 id="_2"><img alt="alt text" src="../image-10.png"/></h2>
+<h3 id="explanation_1">Explanation:</h3>
+<p>This graph shows how <strong>escape velocity decreases with radius</strong> for a fixed mass. It’s helpful for planning satellite launches or designing missions from orbital altitudes.</p>
+<hr/>
+<h2 id="task-3-practical-applications">Task 3: Practical Applications</h2>
+<h3 id="mathematical-formulation_2">Mathematical Formulation:</h3>
+<ul>
+<li><strong>Satellites:</strong> need at least <span class="arithmatex">\(v_1\)</span></li>
+<li><strong>Interplanetary probes:</strong> need <span class="arithmatex">\(v_2\)</span></li>
+<li><strong>Interstellar missions:</strong> exceed <span class="arithmatex">\(v_3\)</span></li>
+</ul>
+<p>Example for <strong>Third Cosmic Velocity</strong> from Earth’s orbit:</p>
+<div class="arithmatex">\[
+v_3 = \sqrt{2GM_{\odot}/r} \quad \text{where } r = 1 \text{ AU}
+\]</div>
+<hr/>
+<h3 id="python-code_2">Python Code:</h3>
+<pre><code class="language-python"># Sun parameters
+M_sun = 1.989e30
+R_earth_orbit = 1.496e11
+
+v_escape_sun = np.sqrt(2 * G * M_sun / R_earth_orbit)
+v_orbit_earth = np.sqrt(G * M_sun / R_earth_orbit)
+v3 = np.sqrt(v_escape_sun**2 + v_orbit_earth**2)
+
+print(f"Third Cosmic Velocity from Earth Orbit: {v3/1000:.2f} km/s")
+</code></pre>
+<p><img alt="alt text" src="../image-11.png"/>
+<img alt="alt text" src="../image-12.png"/></p>
+<hr/>
+<h3 id="explanation_2">Explanation:</h3>
+<p><strong>Third cosmic velocity</strong> is the speed needed to escape the Sun’s gravity from Earth’s orbit. It's higher than the second velocity due to both Sun’s gravity and Earth's orbital motion. This is critical for missions leaving the Solar System.</p>
+<hr/>
+<h2 id="task-4-implementation">Task 4: Implementation</h2>
+<h3 id="python-code-for-visualization">Python Code for Visualization:</h3>
+<pre><code class="language-python">labels, v1s, v2s = [], [], []
+for body, data in bodies.items():
+    M, R = data["M"], data["R"]
+    v1 = np.sqrt(G * M / R)
+    v2 = np.sqrt(2 * G * M / R)
+    labels.append(body)
+    v1s.append(v1 / 1000)
+    v2s.append(v2 / 1000)
+
+x = np.arange(len(labels))
+width = 0.35
+
+plt.bar(x - width/2, v1s, width, label='v1 (Orbital)')
+plt.bar(x + width/2, v2s, width, label='v2 (Escape)')
+plt.xticks(x, labels)
+plt.ylabel("Velocity (km/s)")
+plt.title("First and Second Cosmic Velocities")
+plt.legend()
+plt.grid(True, axis='y')
+plt.show()
+</code></pre>
+<h2 id="_3"><img alt="alt text" src="../image-14.png"/></h2>
+<h3 id="explanation_3">Explanation:</h3>
+<p>This bar graph compares <strong>orbital and escape velocities</strong> of Earth, Mars, and Jupiter. It shows how much more velocity is needed to launch from massive planets, informing rocket design and fuel budgeting.</p>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
